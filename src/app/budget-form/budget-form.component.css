@@ -95,3 +95,8 @@ button:hover {
   padding: 5px;
   margin-top: 5px;
 }
+
+/* Add spacing between buttons */
+.button-spacing {
+  margin-right: 10px; /* Adjust the margin as needed */
+}

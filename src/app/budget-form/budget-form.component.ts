@@ -15,9 +15,11 @@ export class BudgetFormComponent implements OnInit {
 
   cashItems: FormArray;
   debtItems: FormArray;
+  necessityItems: FormArray;
 
   cashItemNames: string[] = ['Checking', 'Savings', 'Retirement', 'Investments', 'Other'];
   debtItemNames: string[] = ['Credit Cards', 'Personal Loans', 'Car Loan', 'Mortgage', 'Student Loans', 'Other'];
+  necessityItemNames: string[] = ['Rent', 'Utilities', 'Groceries', 'Gas', 'Other'];
   debtInterestRates: number[] = [0];
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
@@ -30,12 +32,13 @@ export class BudgetFormComponent implements OnInit {
         this.createDebtControl(),
       ]),
       necessities: this.fb.array([
-        this.createNecessityControl('Rent'),
+        this.createNecessityControl(),
       ]),
     });
 
     this.cashItems = this.budgetForm.get('cashItems') as FormArray;
     this.debtItems = this.budgetForm.get('debtItems') as FormArray;
+    this.necessityItems = this.budgetForm.get('necessityItems') as FormArray;
   }
 
   ngOnInit() {}
@@ -74,7 +77,7 @@ export class BudgetFormComponent implements OnInit {
   }
 
   addNecessity() {
-    const control = this.createNecessityControl('');
+    const control = this.createNecessityControl();
     this.necessities.push(control);
   }
 
@@ -93,24 +96,43 @@ export class BudgetFormComponent implements OnInit {
     });
   }
 
-  createNecessityControl(name: string) {
+  createNecessityControl() {
     return this.fb.group({
-      name: [name],
+      name: ['Rent'],
       amount: [null],
     });
   }
 
+  transformFormData(formData: any): any {
+    const transformedData = {
+      postTaxIncome: formData.postTaxIncome,
+      cashItems: formData.cashItems.map((item: any) => ({
+        name: item.name,
+        amount: item.amount
+      })),
+      debtItems: formData.debtItems.map((item: any) => ({
+        name: item.name,
+        amount: item.amount,
+        interestRate: item.interestRate
+      })),
+      necessities: formData.necessities.map((item: any) => ({
+        name: item.name,
+        amount: item.amount
+      }))
+    };
+    return transformedData;
+  }
+
   onSubmit() {
     if (this.budgetForm.valid) {
-      const formData = this.budgetForm.value;
-      // Process the form data as needed, e.g., send it to a server or perform calculations
+      const formData = this.transformFormData(this.budgetForm.value);
+      // Process the transformed form data as needed
       this.dataService.setFormData(formData);
       console.log(formData);
       this.router.navigate(['/budget-overview']);
-    }
-    else {
+    } else {
       console.log('Form is invalid');
     }
   }
-  
+
 }
