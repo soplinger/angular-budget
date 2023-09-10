@@ -26,6 +26,7 @@
   </div>
   
   <!-- Debt -->
+  <div class="form-section">
   <h3>Debt</h3>
   <div formArrayName="debtItems">
     <div *ngFor="let debtItem of debtItems.controls; let i = index" [formGroupName]="i">
@@ -45,11 +46,13 @@
       <!-- Add more input fields here as needed -->
     </div>
   </div>
+</div>
   
   <button (click)="addDebtItem()">Add Debt Item</button>
   
   
     <!-- Current Necessities -->
+    <div class="form-section">
     <h3>Current Necessities</h3>
     <div formArrayName="necessities">
       <div *ngFor="let necessity of necessities.controls; let i = index" [formGroupName]="i">
@@ -63,6 +66,7 @@
   
         <button (click)="addNecessity()" *ngIf="i === necessities.length - 1">Add Necessity</button>
       </div>
+    </div>
     </div>
   
     <button (click)="onSubmit()" type="submit" class="button-spacing">Submit</button>
