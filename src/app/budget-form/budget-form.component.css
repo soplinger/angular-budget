@@ -35,23 +35,27 @@ form {
     margin-bottom: 15px;
     font-size: 16px;
   }
-  
-  /* Style the "+" button */
-  button {
-    background-color: #007bff;
-    color: #fff;
+
+/* Style all buttons */
+button {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
     border: none;
-    border-radius: 50%;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 10px 20px; /* Adjust padding as needed */
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
+    transition: background-color 0.3s; /* Add a smooth transition effect */
+}
+
+/* Hover effect for all buttons */
+button:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}
   
-  button:hover {
-    background-color: #0056b3;
-  }
   
+  
+  /* Additional styles as needed */
+  
+
   /* Optional: Style form errors */
   .ng-invalid {
     border-color: #ff0000;

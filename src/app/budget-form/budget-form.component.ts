@@ -16,8 +16,9 @@ export class BudgetFormComponent implements OnInit {
   cashItems: number[] = [0]; // Initialize with one item
   cashItemNames: string[] = ['Checking', 'Savings', 'Retirement', 'Investments', 'Other'];
   
-  debtItems: number[] = [0]; // Initialize with one item
+  debtItems: any[] = [{ debtName: 'Credit Cards', debtAmount: null, interestRate: null }];
   debtItemNames: string[] = ['Credit Cards', 'Personal Loans', 'Car Loan', 'Mortgage', 'Student Loans', 'Other'];
+  debtInterestRates: number[] = [0];
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
     this.budgetForm = this.fb.group({
@@ -26,6 +27,7 @@ export class BudgetFormComponent implements OnInit {
       cashAmount0: [null],
       debtName0: [this.debtItemNames[0]],
       debtAmount0: [null],
+      debtInterestRate0 : [null],
       rent: [null],
       bills: [null],
       groceries: [null],
@@ -54,7 +56,7 @@ export class BudgetFormComponent implements OnInit {
 
   addDebtItem() {
     const newIndex = this.debtItems.length;
-    this.debtItems.push(newIndex);
+    this.debtItems.push({ debtName: 'Credit Cards', debtAmount: null, interestRate: null });
 
     // Initialize form controls for both debt item name and amount
     const debtNameControlName = `debtName${newIndex}`;
