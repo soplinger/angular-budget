@@ -24,10 +24,23 @@
     </div>
     
     <!-- Debt -->
-    <h3>Debt</h3>
-    <label for="creditCards">Credit Cards</label>
-    <input type="number" id="creditCards" formControlName="creditCards">
-    <!-- Add other debt input fields similarly -->
+    <div class="form-section">
+        <h3>Debt</h3>
+        <div *ngFor="let debtItem of debtItems; let i = index">
+          <label for="debtName{{ i }}">debt Item {{ i + 1 }}</label>
+          <select id="debtName{{ i }}" formControlName="debtName{{ i }}">
+            <option *ngFor="let itemName of debtItemNames" [value]="itemName">{{ itemName }}</option>
+          </select>
+          
+          <!-- Input field for amount -->
+          <label for="debtAmount{{ i }}">Amount</label>
+          <input type="number" id="debtAmount{{ i }}" formControlName="debtAmount{{ i }}">
+          
+          <!-- Add more input fields here as needed -->
+        
+          <button (click)="addDebtItem()" *ngIf="i === debtItems.length - 1">+</button>
+        </div>
+      </div>
     
     <!-- Current Necessities -->
     <h3>Current Necessities</h3>

@@ -11,19 +11,20 @@ import { Router } from '@angular/router';
 export class BudgetFormComponent implements OnInit {
   
   budgetForm: FormGroup;
+
   cashItems: number[] = [0]; // Initialize with one item
   cashItemNames: string[] = ['Checking', 'Savings', 'Retirement', 'Investments', 'Other'];
+  
+  debtItems: number[] = [0]; // Initialize with one item
+  debtItemNames: string[] = ['Credit Cards', 'Personal Loans', 'Car Loan', 'Mortgage', 'Student Loans', 'Other'];
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
     this.budgetForm = this.fb.group({
       postTaxIncome: [null],
       cashName0: [this.cashItemNames[0]],
       cashAmount0: [null],
-      creditCards: [null],
-      personalLoans: [null],
-      carLoan: [null],
-      mortgage: [null],
-      studentLoans: [null],
+      debtName0: [this.debtItemNames[0]],
+      debtAmount0: [null],
       rent: [null],
       bills: [null],
       groceries: [null],
@@ -45,6 +46,18 @@ export class BudgetFormComponent implements OnInit {
 
     this.budgetForm.addControl(nameControlName, new FormControl(this.cashItemNames[0])); // Initialize with the first name
     this.budgetForm.addControl(amountControlName, new FormControl(null));
+  }
+
+  addDebtItem() {
+  const newIndex = this.debtItems.length;
+  this.debtItems.push(newIndex);
+
+  // Initialize form controls for both debt item name and amount
+  const debtNameControlName = `debtName${newIndex}`;
+  const debtAmountControlName = `debtAmount${newIndex}`;
+
+  this.budgetForm.addControl(debtNameControlName, new FormControl(this.debtItemNames[0])); // Initialize with the first name
+  this.budgetForm.addControl(debtAmountControlName, new FormControl(null));
   }
 
   onSubmit() {
