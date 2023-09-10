@@ -55,7 +55,7 @@
       <div *ngFor="let necessity of necessities.controls; let i = index" [formGroupName]="i">
         <label for="necessityName{{ i }}">Necessity Item {{ i + 1 }}</label>
         <select id="necessityName{{ i }}" formControlName="name">
-            <option *ngFor="let itemName of debtItemNames" [value]="itemName">{{ itemName }}</option>
+            <option *ngFor="let itemName of necessityItemNames" [value]="itemName">{{ itemName }}</option>
           </select>
   
         <label for="necessityAmount{{ i }}">Amount</label>
