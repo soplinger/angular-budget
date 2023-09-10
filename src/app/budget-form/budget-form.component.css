@@ -100,3 +100,16 @@ button:hover {
 .button-spacing {
   margin-right: 10px; /* Adjust the margin as needed */
 }
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.button-container button {
+  margin-right: 10px;
+}
+
+label {
+  padding-top: 15px; /* Adjust the padding as needed */
+}

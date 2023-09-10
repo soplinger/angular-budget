@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { FormArray } from '@angular/forms';
@@ -83,6 +83,7 @@ export class BudgetFormComponent implements OnInit {
 
   createCashControl() {
     return this.fb.group({
+      id: [this.generateUniqueId()],
       name: ['Checking'],
       amount: [null]
     });
@@ -90,6 +91,7 @@ export class BudgetFormComponent implements OnInit {
 
   createDebtControl(){
     return this.fb.group({
+      id: [this.generateUniqueId()],
       name: ['Credit Cards'],
       amount: [null],
       interestRate: [null]
@@ -98,6 +100,7 @@ export class BudgetFormComponent implements OnInit {
 
   createNecessityControl() {
     return this.fb.group({
+      id: [this.generateUniqueId()],
       name: ['Rent'],
       amount: [null],
     });
@@ -121,6 +124,36 @@ export class BudgetFormComponent implements OnInit {
       }))
     };
     return transformedData;
+  }
+
+  removeCashItem(cashItem: AbstractControl) {
+    const cashItems = this.budgetForm.get('cashItems') as FormArray;
+    const index = cashItems.controls.indexOf(cashItem);
+    cashItems.removeAt(index);
+    // Also remove the corresponding item from your cashItems array
+    this.cashItems.removeAt(index);
+  }
+
+  removeDebtItem(debtItem: AbstractControl) {
+    const debtItems = this.budgetForm.get('debtItems') as FormArray;
+    const index = debtItems.controls.indexOf(debtItem);
+    debtItems.removeAt(index);
+    this.debtItems.removeAt(index);
+  }
+  
+  removeNecessityItem(necessityItem: AbstractControl) {
+    const necessityItems = this.budgetForm.get('necessities') as FormArray;
+    const index = necessityItems.controls.indexOf(necessityItem);
+    necessityItems.removeAt(index);
+    this.necessities.removeAt(index);
+  }
+
+  generateUniqueId() {
+    return Math.random().toString(36).substr(2, 9);
+  }
+
+  getIdValue(item: AbstractControl) {
+    return item.get('id')?.value;
   }
 
   onSubmit() {

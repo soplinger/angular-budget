@@ -27,13 +27,19 @@ export class BudgetChartComponent implements OnInit {
 
   ngOnInit() {
     const formData = this.dataService.getFormData();
+
     if (formData) {
-      // Assuming formData is in the format you specified
-      this.pieChartDatasets[0].data = [
-        this.calculateCashTotal(formData.cashItems),
-        this.calculateDebtTotal(formData.debtItems),
-        this.calculateNecessitiesTotal(formData.necessities)
-      ];
+      if (
+        formData.cashTotal !== null &&
+        formData.debtTotal !== null &&
+        formData.necessitiesTotal !== null
+      ) {
+        this.pieChartDatasets[0].data = [
+          formData.cashTotal,
+          formData.debtTotal,
+          formData.necessitiesTotal
+        ];
+      }
     }
   }
 
