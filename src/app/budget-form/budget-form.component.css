@@ -69,3 +69,19 @@ form {
     margin-bottom: 10px;
   }
   
+  /* Adjust the size of necessity input fields */
+.necessity-item {
+    margin-bottom: 10px;
+  }
+  
+  .necessity-name-input,
+  .necessity-amount-input {
+    width: 100%; /* Set width to 100% to match the container's width */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  
+  /* Additional styles as needed */
+  

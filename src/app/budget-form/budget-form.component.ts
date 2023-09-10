@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-budget-form',
@@ -30,7 +31,10 @@ export class BudgetFormComponent implements OnInit {
       groceries: [null],
       gas: [null],
       debtMinimumPayments: [null],
+      necessities: this.fb.array([
+        this.createNecessityControl('Rent'),
       // Add other form controls as needed
+      ]),
     });
   }
 
@@ -49,15 +53,33 @@ export class BudgetFormComponent implements OnInit {
   }
 
   addDebtItem() {
-  const newIndex = this.debtItems.length;
-  this.debtItems.push(newIndex);
+    const newIndex = this.debtItems.length;
+    this.debtItems.push(newIndex);
 
-  // Initialize form controls for both debt item name and amount
-  const debtNameControlName = `debtName${newIndex}`;
-  const debtAmountControlName = `debtAmount${newIndex}`;
+    // Initialize form controls for both debt item name and amount
+    const debtNameControlName = `debtName${newIndex}`;
+    const debtAmountControlName = `debtAmount${newIndex}`;
+    const interestRateControlName = `debtInterestRate${newIndex}`;
 
-  this.budgetForm.addControl(debtNameControlName, new FormControl(this.debtItemNames[0])); // Initialize with the first name
-  this.budgetForm.addControl(debtAmountControlName, new FormControl(null));
+    this.budgetForm.addControl(debtNameControlName, new FormControl(this.debtItemNames[0])); // Initialize with the first name
+    this.budgetForm.addControl(debtAmountControlName, new FormControl(null));
+    this.budgetForm.addControl(interestRateControlName, new FormControl(null));
+  }
+
+  get necessities() {
+    return this.budgetForm.get('necessities') as FormArray;
+  }
+
+  addNecessity() {
+    const control = this.createNecessityControl('');
+    this.necessities.push(control);
+  }
+
+  createNecessityControl(name: string) {
+    return this.fb.group({
+      name: [name],
+      amount: [null],
+    });
   }
 
   onSubmit() {
