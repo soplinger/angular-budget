@@ -1,0 +1,40 @@
+<form [formGroup]="budgetForm">
+    <!-- Post Tax Income -->
+    <h3>Income</h3>
+    <label for="postTaxIncome">Post Tax Income</label>
+    <input type="number" id="postTaxIncome" formControlName="postTaxIncome">
+    
+    <!-- Cash -->
+    <div class="form-section">
+      <h3>Cash</h3>
+      <div *ngFor="let cashItem of cashItems; let i = index">
+        <label for="cashName{{ i }}">Cash Item {{ i + 1 }}</label>
+        <select id="cashName{{ i }}" formControlName="cashName{{ i }}">
+          <option *ngFor="let itemName of cashItemNames" [value]="itemName">{{ itemName }}</option>
+        </select>
+        
+        <!-- Input field for amount -->
+        <label for="cashAmount{{ i }}">Amount</label>
+        <input type="number" id="cashAmount{{ i }}" formControlName="cashAmount{{ i }}">
+        
+        <!-- Add more input fields here as needed -->
+      
+        <button (click)="addCashItem()" *ngIf="i === cashItems.length - 1">+</button>
+      </div>
+    </div>
+    
+    <!-- Debt -->
+    <h3>Debt</h3>
+    <label for="creditCards">Credit Cards</label>
+    <input type="number" id="creditCards" formControlName="creditCards">
+    <!-- Add other debt input fields similarly -->
+    
+    <!-- Current Necessities -->
+    <h3>Current Necessities</h3>
+    <label for="rent">Rent</label>
+    <input type="number" id="rent" formControlName="rent">
+    <!-- Add other necessity input fields similarly -->
+    
+    <button (click)="onSubmit()" type="submit">Submit</button>
+  </form>
+  
