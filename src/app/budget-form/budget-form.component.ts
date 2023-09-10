@@ -13,68 +13,84 @@ export class BudgetFormComponent implements OnInit {
   
   budgetForm: FormGroup;
 
-  cashItems: number[] = [0]; // Initialize with one item
+  cashItems: FormArray;
+  debtItems: FormArray;
+
   cashItemNames: string[] = ['Checking', 'Savings', 'Retirement', 'Investments', 'Other'];
-  
-  debtItems: any[] = [{ debtName: 'Credit Cards', debtAmount: null, interestRate: null }];
   debtItemNames: string[] = ['Credit Cards', 'Personal Loans', 'Car Loan', 'Mortgage', 'Student Loans', 'Other'];
   debtInterestRates: number[] = [0];
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
     this.budgetForm = this.fb.group({
       postTaxIncome: [null],
-      cashName0: [this.cashItemNames[0]],
-      cashAmount0: [null],
-      debtName0: [this.debtItemNames[0]],
-      debtAmount0: [null],
-      debtInterestRate0 : [null],
-      rent: [null],
-      bills: [null],
-      groceries: [null],
-      gas: [null],
-      debtMinimumPayments: [null],
+      cashItems: this.fb.array([
+        this.createCashControl(),
+      ]),
+      debtItems: this.fb.array([
+        this.createDebtControl(),
+      ]),
       necessities: this.fb.array([
         this.createNecessityControl('Rent'),
-      // Add other form controls as needed
       ]),
     });
+
+    this.cashItems = this.budgetForm.get('cashItems') as FormArray;
+    this.debtItems = this.budgetForm.get('debtItems') as FormArray;
   }
 
   ngOnInit() {}
 
   addCashItem() {
-    const newIndex = this.cashItems.length;
-    this.cashItems.push(newIndex);
-
-    // Initialize form controls for both cash item name and amount
-    const nameControlName = `cashName${newIndex}`;
-    const amountControlName = `cashAmount${newIndex}`;
-
-    this.budgetForm.addControl(nameControlName, new FormControl(this.cashItemNames[0])); // Initialize with the first name
-    this.budgetForm.addControl(amountControlName, new FormControl(null));
+    const cashItems = this.budgetForm.get('cashItems') as FormArray;
+    this.cashItems.push(this.createCashControl());
   }
 
+  
   addDebtItem() {
-    const newIndex = this.debtItems.length;
-    this.debtItems.push({ debtName: 'Credit Cards', debtAmount: null, interestRate: null });
+    const debtItems = this.budgetForm.get('debtItems') as FormArray;
+    this.debtItems.push(this.createDebtControl());
+  }
+  
+  get cash() {
+    return this.budgetForm.get('cashItems') as FormArray;
+  }
 
-    // Initialize form controls for both debt item name and amount
-    const debtNameControlName = `debtName${newIndex}`;
-    const debtAmountControlName = `debtAmount${newIndex}`;
-    const interestRateControlName = `debtInterestRate${newIndex}`;
-
-    this.budgetForm.addControl(debtNameControlName, new FormControl(this.debtItemNames[0])); // Initialize with the first name
-    this.budgetForm.addControl(debtAmountControlName, new FormControl(null));
-    this.budgetForm.addControl(interestRateControlName, new FormControl(null));
+  get debt() {
+    return this.budgetForm.get('debtItems') as FormArray;
   }
 
   get necessities() {
     return this.budgetForm.get('necessities') as FormArray;
   }
 
+  addCash() {
+    const control = this.createCashControl();
+    this.cash.push(control);
+  }
+
+  addDebt() {
+    const control = this.createDebtControl();
+    this.debt.push(control);
+  }
+
   addNecessity() {
     const control = this.createNecessityControl('');
     this.necessities.push(control);
+  }
+
+  createCashControl() {
+    return this.fb.group({
+      name: ['Checking'],
+      amount: [null]
+    });
+  }
+
+  createDebtControl(){
+    return this.fb.group({
+      name: ['Credit Cards'],
+      amount: [null],
+      interestRate: [null]
+    });
   }
 
   createNecessityControl(name: string) {

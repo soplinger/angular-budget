@@ -89,3 +89,9 @@ button:hover {
   
   /* Additional styles as needed */
   
+  /* Add your custom CSS styles */
+.custom-necessity-input {
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-top: 5px;
+}
