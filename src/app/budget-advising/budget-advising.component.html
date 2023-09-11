@@ -1,0 +1,14 @@
+<h2>Financial Goal</h2>
+
+<div *ngIf="showQuestion">
+    <form #goalForm="ngForm" (ngSubmit)="onSubmit()">
+        <label for="financialGoal">Choose your financial goal:</label>
+        <select id="financialGoal" name="financialGoal" [(ngModel)]="financialGoal" required>
+            <option *ngFor="let option of financialGoalOptions" [value]="option">{{ option }}</option>
+        </select>
+
+        <button type="submit">Get Advice</button>
+    </form>
+</div>
+
+<!-- Add your advice content here -->
