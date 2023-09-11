@@ -13,6 +13,9 @@ export class BudgetAdvisingComponent {
   formData: any;
   showQuestion: boolean = true;
   debtAdvice: string = '';
+  userTotalCash: number = 0;
+  userEmergencyFund: number = 0;
+
 
   financialGoalOptions: string[] = ['Pay off Debt', 'Save for the Future', 'Save for a Large Purchase', 'Live Within My Means'];
 
@@ -44,7 +47,6 @@ export class BudgetAdvisingComponent {
     this.showQuestion = false;
   }
 
-
   handleDebt() {
     console.log('handleDebt');
   
@@ -55,38 +57,49 @@ export class BudgetAdvisingComponent {
       return acc + expense.amount;
     }, 0);
   
-    // Calculate total debt and total interest
-    let totalDebt = 0;
-    let totalInterest = 0;
-    this.formData.debtItems.forEach((debt: any) => {
-      totalDebt += debt.amount;
-      totalInterest += (debt.amount * debt.interestRate / 100);
-    });
+    // Calculate total cash
+    const totalCash = this.formData.cashItems.reduce((acc: number, cash: any) => {
+      return acc + cash.amount;
+    }, 0);
   
-    // Calculate disposable income
-    const disposableIncome = income - expenses;
+    // Calculate 6-month emergency fund
+    const emergencyFundRequired = expenses * 6;
   
-    // Allocate a portion (e.g., 50%) of disposable income to debt
-    const debtPayment = disposableIncome * 0.5;
+    // Calculate available cash after setting aside emergency fund
+    const availableCash = totalCash - emergencyFundRequired;
   
-    // Calculate months to pay off debt
-    const monthsToPayOff = (totalDebt + totalInterest) / debtPayment;
+    // Store the financial information
+    this.userTotalCash = totalCash;
+    this.userEmergencyFund = availableCash > 0 ? emergencyFundRequired : totalCash;
   
-    // Sort credit cards based on interest rate
-const sortedCreditCards = this.formData.debtItems
-.filter((debt: any) => debt.name === 'Credit Cards')
-.sort((a: any, b: any) => b.interestRate - a.interestRate);
-
-if (sortedCreditCards.length > 0) {
-this.debtAdvice += ` Start by paying off the credit card nicknamed "${sortedCreditCards[0].nickname}" which has the highest interest rate of ${sortedCreditCards[0].interestRate}%.`;
-}
-
-
-    this.debtAdvice = `With a monthly payment of ${debtPayment.toFixed(2)}, it will take approximately ${Math.ceil(monthsToPayOff)} months to pay off the debt. You'll pay an estimated total of ${totalInterest.toFixed(2)} in interest.`;
+    this.debtAdvice = `Based on your monthly necessities, you should aim for an emergency fund of $${emergencyFundRequired.toFixed(2)}. `;
+  
+    if (totalCash < emergencyFundRequired) {
+      this.debtAdvice += `You currently have $${totalCash.toFixed(2)}, which means you need an additional $${(emergencyFundRequired - totalCash).toFixed(2)} to reach your emergency fund goal. Consider building this fund before aggressively paying off debt. `;
+    } else {
+      this.debtAdvice += `You have an excess of $${availableCash.toFixed(2)} after setting aside a 6-month emergency fund. Consider using this amount to pay off your debt faster. `;
+    }
+  
+    // Sort credit cards based on interest rate and provide advice
+    const sortedCreditCards = this.formData.debtItems
+      .filter((debt: any) => debt.name === 'Credit Cards')
+      .sort((a: any, b: any) => b.interestRate - a.interestRate);
+  
+    if (sortedCreditCards.length > 0) {
+      sortedCreditCards.forEach((card: { nickname: string, interestRate: number, amount: number }) => {
+        const monthsToPayOff = card.amount / (income - expenses);
+        this.debtAdvice += `Pay off the credit card nicknamed "${card.nickname}" with an interest rate of ${card.interestRate}%. It will take approximately ${Math.ceil(monthsToPayOff)} months to pay off. `;
+      });
+    }
+  
+    // Additional advice: Importance of budgeting and monitoring expenses
+    this.debtAdvice += `Regularly monitor your expenses and adjust your budget as needed. This will help you stay on track with your financial goals and avoid accumulating more debt.`;
+  
     console.log(this.debtAdvice);
-    console.log(sortedCreditCards);
   }
-
+  
+  
+  
   handleFuture() {
     console.log('handleFuture');
   }

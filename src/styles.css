@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+/* Existing global styles */
+
+.advising-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.question-section, .advice-section {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.advice-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007BFF;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.advice-btn:hover {
+    background-color: #0056b3;
+}
+
+/* ... [existing styles] ... */
+
+.advice-list {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.advice-list .last-item {
+    margin-bottom: 0;
+}

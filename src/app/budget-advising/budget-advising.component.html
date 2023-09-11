@@ -1,18 +1,21 @@
-<h2>Financial Goal</h2>
+<div class="advising-container">
+    <h2>Financial Goal</h2>
 
-<div *ngIf="showQuestion">
-    <form #goalForm="ngForm" (ngSubmit)="onSubmit()">
-        <label for="financialGoal">Choose your financial goal:</label>
-        <select id="financialGoal" name="financialGoal" [(ngModel)]="financialGoal" required>
-            <option *ngFor="let option of financialGoalOptions" [value]="option">{{ option }}</option>
-        </select>
+    <div *ngIf="showQuestion" class="question-section">
+        <form #goalForm="ngForm" (ngSubmit)="onSubmit()">
+            <label for="financialGoal">Choose your financial goal:</label>
+            <select id="financialGoal" name="financialGoal" [(ngModel)]="financialGoal" required>
+                <option *ngFor="let option of financialGoalOptions" [value]="option">{{ option }}</option>
+            </select>
+            <button type="submit" class="advice-btn">Get Advice</button>
+        </form>
+    </div>
 
-        <button type="submit">Get Advice</button>
-    </form>
-</div>
-
-
-<div *ngIf="!showQuestion && financialGoal === 'Pay off Debt'">
-    <h3>Debt Payoff Advice</h3>
-    <p>{{ debtAdvice }}</p>
+    <div *ngIf="!showQuestion && financialGoal === 'Pay off Debt'" class="advice-section">
+        <h3>Debt Payoff Advice</h3>
+        <ul class="advice-list">
+            <!-- Split the advice string by '.' and loop through to create list items -->
+            <li *ngFor="let advice of debtAdvice.split('.'); let last = last" [class.last-item]="last">{{ advice }}</li>
+        </ul>
+    </div>
 </div>
