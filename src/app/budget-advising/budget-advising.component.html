@@ -11,4 +11,8 @@
     </form>
 </div>
 
-<!-- Add your advice content here -->
+
+<div *ngIf="!showQuestion && financialGoal === 'Pay off Debt'">
+    <h3>Debt Payoff Advice</h3>
+    <p>{{ debtAdvice }}</p>
+</div>

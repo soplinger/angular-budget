@@ -88,13 +88,15 @@ export class BudgetFormComponent implements OnInit {
     });
   }
 
-  createDebtControl(){
+  createDebtControl() {
     return this.fb.group({
       name: ['Credit Cards'],
+      nickname: [''],  // Add this line
       amount: [null],
       interestRate: [null]
     });
   }
+  
 
   createNecessityControl() {
     return this.fb.group({
@@ -112,6 +114,7 @@ export class BudgetFormComponent implements OnInit {
       })),
       debtItems: formData.debtItems.map((item: any) => ({
         name: item.name,
+        nickname: item.nickname,  // Add this line
         amount: item.amount,
         interestRate: item.interestRate
       })),
@@ -122,6 +125,7 @@ export class BudgetFormComponent implements OnInit {
     };
     return transformedData;
   }
+  
 
   onSubmit() {
     if (this.budgetForm.valid) {
