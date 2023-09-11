@@ -1,46 +1,20 @@
-/* budget-advising.component.css */
-
 h2 {
     font-size: 24px;
     margin-bottom: 20px;
+    color: #333;
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-label {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-select {
-    font-size: 16px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-}
-
-button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #0069d9;
-}
-
-.advice-container {
-    margin-top: 20px;
-    font-size: 18px;
-    line-height: 1.5;
+label, select {
+    width: 100%;
+    margin-bottom: 15px;
 }
