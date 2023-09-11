@@ -1,78 +1,81 @@
-<form [formGroup]="budgetForm">
-    <!-- Post Tax Income -->
+<form [formGroup]="budgetForm" (ngSubmit)="onSubmit()">
+
+  <!-- Income Section -->
+  <div class="form-section">
     <h3>Income</h3>
-    <label for="postTaxIncome">Post Tax Income</label>
+    <label for="postTaxIncome">Post Tax Income:</label>
     <input type="number" id="postTaxIncome" formControlName="postTaxIncome">
-  
-    <!-- Cash -->
-<div class="form-section">
+    <div *ngIf="budgetForm.get('postTaxIncome')?.invalid && budgetForm.get('postTaxIncome')?.touched" class="error-text">
+      Please enter a valid post-tax income.
+    </div>
+  </div>
+
+  <!-- Cash Section -->
+  <div class="form-section">
     <h3>Cash</h3>
     <div formArrayName="cashItems">
       <div *ngFor="let cashItem of cashItems.controls; let i = index" [formGroupName]="i">
-        <label for="cashName{{ i }}">Cash Item {{ i + 1 }}</label>
+        <label for="cashName{{ i }}">Cash Item {{ i + 1 }}:</label>
         <select id="cashName{{ i }}" formControlName="name">
           <option *ngFor="let itemName of cashItemNames" [value]="itemName">{{ itemName }}</option>
         </select>
-  
-        <!-- Input field for amount -->
-        <label for="cashAmount{{ i }}">Amount</label>
+        <label for="cashAmount{{ i }}">Amount:</label>
         <input type="number" id="cashAmount{{ i }}" formControlName="amount">
-  
-        <!-- Add more input fields here as needed -->
+        <div *ngIf="budgetForm.get('cashName')?.invalid && budgetForm.get('cashName')?.touched" class="error-text">
+          Please enter a cash account.
+        </div>
       </div>
     </div>
-  
     <button (click)="addCashItem()">Add Cash Item</button>
   </div>
-  
-  <!-- Debt -->
-<div class="form-section">
-  <h3>Debt</h3>
-  <div formArrayName="debtItems">
-    <div *ngFor="let debtItem of debtItems.controls; let i = index" [formGroupName]="i">
-      <label for="debtName{{ i }}">Debt Item {{ i + 1 }}</label>
-      <select id="debtName{{ i }}" formControlName="name">
-        <option *ngFor="let itemName of debtItemNames" [value]="itemName">{{ itemName }}</option>
-      </select>
 
-      <!-- Input field for nickname (only for Credit Cards) -->
-      <div *ngIf="debtItem.get('name')?.value === 'Credit Cards'">
-        <label for="debtNickname{{ i }}">Nickname</label>
-        <input type="text" id="debtNickname{{ i }}" formControlName="nickname">
+  <!-- Debt Section -->
+  <div class="form-section">
+    <h3>Debt</h3>
+    <div formArrayName="debtItems">
+      <div *ngFor="let debtItem of debtItems.controls; let i = index" [formGroupName]="i">
+        <label for="debtName{{ i }}">Debt Item {{ i + 1 }}:</label>
+        <select id="debtName{{ i }}" formControlName="name">
+          <option *ngFor="let itemName of debtItemNames" [value]="itemName">{{ itemName }}</option>
+        </select>
+        <div *ngIf="debtItem.get('name')?.value === 'Credit Cards'">
+          <label for="debtNickname{{ i }}">Nickname:</label>
+          <input type="text" id="debtNickname{{ i }}" formControlName="nickname">
+        </div>
+        <label for="debtAmount{{ i }}">Amount:</label>
+        <input type="number" id="debtAmount{{ i }}" formControlName="amount">
+        <label for="debtInterestRate{{ i }}">Interest Rate (%):</label>
+        <input type="number" id="debtInterestRate{{ i }}" formControlName="interestRate">
+        <div *ngIf="budgetForm.get('debtName')?.invalid && budgetForm.get('debtName')?.touched" class="error-text">
+          Please enter a debt.
+        </div>
       </div>
-
-      <!-- Input field for amount -->
-      <label for="debtAmount{{ i }}">Amount</label>
-      <input type="number" id="debtAmount{{ i }}" formControlName="amount">
-
-      <!-- Input field for interest rate -->
-      <label for="debtInterestRate{{ i }}">Interest Rate (%)</label>
-      <input type="number" id="debtInterestRate{{ i }}" formControlName="interestRate">
     </div>
+    <button (click)="addDebtItem()">Add Debt Item</button>
   </div>
-  <button (click)="addDebtItem()">Add Debt Item</button>
-</div>
 
-  
-  
-    <!-- Current Necessities -->
-    <div class="form-section">
+  <!-- Necessities Section -->
+  <div class="form-section">
     <h3>Current Necessities</h3>
     <div formArrayName="necessities">
       <div *ngFor="let necessity of necessities.controls; let i = index" [formGroupName]="i">
-        <label for="necessityName{{ i }}">Necessity Item {{ i + 1 }}</label>
+        <label for="necessityName{{ i }}">Necessity Item {{ i + 1 }}:</label>
         <select id="necessityName{{ i }}" formControlName="name">
-            <option *ngFor="let itemName of necessityItemNames" [value]="itemName">{{ itemName }}</option>
-          </select>
-  
-        <label for="necessityAmount{{ i }}">Amount</label>
+          <option *ngFor="let itemName of necessityItemNames" [value]="itemName">{{ itemName }}</option>
+        </select>
+        <label for="necessityAmount{{ i }}">Amount:</label>
         <input type="number" id="necessityAmount{{ i }}" formControlName="amount">
-  
-        <button (click)="addNecessity()" *ngIf="i === necessities.length - 1">Add Necessity</button>
+        <div *ngIf="budgetForm.get('necessityName')?.invalid && budgetForm.get('necessityName')?.touched" class="error-text">
+          Please enter a necessity.
+        </div>
       </div>
     </div>
-    </div>
-  
-    <button (click)="onSubmit()" type="submit" class="button-spacing">Submit</button>
-  </form>
-  
+    <button (click)="addNecessity()">Add Necessity</button>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="form-section">
+    <button type="submit" [disabled]="budgetForm.invalid" class="submit-button">Submit</button>
+  </div>
+
+</form>

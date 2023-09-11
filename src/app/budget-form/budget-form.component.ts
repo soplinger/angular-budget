@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { FormArray } from '@angular/forms';
@@ -10,7 +10,6 @@ import { FormArray } from '@angular/forms';
   styleUrls: ['./budget-form.component.css']
 })
 export class BudgetFormComponent implements OnInit {
-  
   budgetForm: FormGroup;
 
   cashItems: FormArray;
@@ -27,14 +26,15 @@ export class BudgetFormComponent implements OnInit {
       postTaxIncome: [null],
       cashItems: this.fb.array([
         this.createCashControl(),
-      ]),
+      ], Validators.minLength(1)),
       debtItems: this.fb.array([
         this.createDebtControl(),
-      ]),
+      ], Validators.minLength(1)),
       necessities: this.fb.array([
         this.createNecessityControl(),
-      ]),
+      ], Validators.minLength(1)),
     });
+    
 
     this.cashItems = this.budgetForm.get('cashItems') as FormArray;
     this.debtItems = this.budgetForm.get('debtItems') as FormArray;
@@ -83,25 +83,25 @@ export class BudgetFormComponent implements OnInit {
 
   createCashControl() {
     return this.fb.group({
-      name: ['Checking'],
-      amount: [null]
+      name: ['Checking', Validators.required],
+      amount: [null, Validators.required]
     });
   }
 
   createDebtControl() {
     return this.fb.group({
-      name: ['Credit Cards'],
-      nickname: [''],  // Add this line
-      amount: [null],
-      interestRate: [null]
+      name: ['Credit Cards', Validators.required],
+      nickname: ['', Validators.required],  // Add this line
+      amount: [null, Validators.required],
+      interestRate: [null, Validators.required]
     });
   }
   
 
   createNecessityControl() {
     return this.fb.group({
-      name: ['Rent'],
-      amount: [null],
+      name: ['Rent', Validators.required],
+      amount: [null, Validators.required],
     });
   }
 
