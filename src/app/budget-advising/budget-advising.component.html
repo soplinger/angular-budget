@@ -14,8 +14,7 @@
     <div *ngIf="!showQuestion && financialGoal === 'Pay off Debt'" class="advice-section">
         <h3>Debt Payoff Advice</h3>
         <ul class="advice-list">
-            <!-- Split the advice string by '.' and loop through to create list items -->
-            <li *ngFor="let advice of debtAdvice.split('.'); let last = last" [class.last-item]="last">{{ advice }}</li>
+            <li *ngFor="let advice of debtAdvice; let last = last" [class.last-item]="last">{{ advice }}</li>
         </ul>
     </div>
 </div>
