@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { FormArray } from '@angular/forms';
@@ -23,8 +23,8 @@ export class BudgetFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
     this.budgetForm = this.fb.group({
-      postTaxIncome: [null],
-      userAge: [null, [Validators.required, Validators.min(18), Validators.max(100)]],
+      postTaxIncome: [null, [Validators.minLength(1), this.isNumeric]],
+      userAge: [null, [Validators.required, Validators.min(18), Validators.max(100), this.isNumeric]],
       cashItems: this.fb.array([
         this.createCashControl(),
       ], Validators.minLength(1)),
@@ -85,7 +85,7 @@ export class BudgetFormComponent implements OnInit {
   createCashControl() {
     return this.fb.group({
       name: ['Checking', Validators.required],
-      amount: [null, Validators.required]
+      amount: [null, Validators.required, this.isNumeric]
     });
   }
 
@@ -93,8 +93,8 @@ export class BudgetFormComponent implements OnInit {
     return this.fb.group({
       name: ['Credit Cards', Validators.required],
       nickname: ['', Validators.required],  // Add this line
-      amount: [null, Validators.required],
-      interestRate: [null, Validators.required]
+      amount: [null, Validators.required, this.isNumeric],
+      interestRate: [null, Validators.required, this.isNumeric]
     });
   }
   
@@ -102,7 +102,7 @@ export class BudgetFormComponent implements OnInit {
   createNecessityControl() {
     return this.fb.group({
       name: ['Rent', Validators.required],
-      amount: [null, Validators.required],
+      amount: [null, Validators.required, this.isNumeric],
     });
   }
 
@@ -127,6 +127,13 @@ export class BudgetFormComponent implements OnInit {
     return transformedData;
   }
   
+  // Custom validator to check if the value is numeric
+  isNumeric(control: AbstractControl) {
+    const val = control.value;
+    if (val === null || val === '') return null;
+    return !isNaN(val) ? null : { 'nonNumeric': true };
+  }
+
 
   onSubmit() {
     if (this.budgetForm.valid) {

@@ -27,6 +27,9 @@
         <input type="number" id="cashAmount{{ i }}" formControlName="amount">
         <div *ngIf="budgetForm.get('cashName')?.invalid && budgetForm.get('cashName')?.touched" class="error-text">
           Please enter a cash account.
+          <div *ngIf="budgetForm.get('amount')?.errors?.['nonNumeric'] && budgetForm.get('amount')?.touched">
+            Amount must be a number.
+        </div>
         </div>
         <div *ngIf="i < cashItems.length - 1" class="divider"></div>
       </div>
@@ -49,11 +52,17 @@
         </div>
         <label for="debtAmount{{ i }}">Amount:</label>
         <input type="number" id="debtAmount{{ i }}" formControlName="amount">
+        <div *ngIf="budgetForm.get('amount')?.errors?.['nonNumeric'] && budgetForm.get('amount')?.touched">
+          Amount must be a number.
+      </div>
         <label for="debtInterestRate{{ i }}">Interest Rate (%):</label>
         <input type="number" id="debtInterestRate{{ i }}" formControlName="interestRate">
         <div *ngIf="budgetForm.get('debtName')?.invalid && budgetForm.get('debtName')?.touched" class="error-text">
           Please enter a debt.
         </div>
+        <div *ngIf="budgetForm.get('amount')?.errors?.['nonNumeric'] && budgetForm.get('amount')?.touched">
+          Interest Rate must be a number.
+      </div>
         <div *ngIf="i < debtItems.length - 1" class="divider"></div>
       </div>
     </div>
@@ -74,6 +83,9 @@
         <div *ngIf="budgetForm.get('necessityName')?.invalid && budgetForm.get('necessityName')?.touched" class="error-text">
           Please enter a necessity.
         </div>
+        <div *ngIf="budgetForm.get('amount')?.errors?.['nonNumeric'] && budgetForm.get('amount')?.touched">
+          Amount must be a number.
+      </div>
         <div *ngIf="i < necessities.length - 1" class="divider"></div>
       </div>
     </div>
