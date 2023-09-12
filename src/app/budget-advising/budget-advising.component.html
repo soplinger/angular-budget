@@ -14,7 +14,28 @@
     <div *ngIf="!showQuestion && financialGoal === 'Pay off Debt'" class="advice-section">
         <h3>Debt Payoff Advice</h3>
         <ul class="advice-list">
-            <li *ngFor="let advice of debtAdvice; let last = last" [class.last-item]="last">{{ advice }}</li>
+            <li *ngFor="let advice of debtAdvice">{{ advice }}</li>
         </ul>
     </div>
+
+    <div *ngIf="!showQuestion && financialGoal === 'Save for the Future'" class="advice-section">
+        <h3>Future Saving Advice</h3>
+        <ul class="advice-list">
+            <li *ngFor="let advice of debtAdvice">{{ advice }}</li>
+        </ul>
+    </div>
+
+    <div *ngIf="!showQuestion && financialGoal === 'Save for a Large Purchase'" class="advice-section">
+        <h3>Future Purchase Advice</h3>
+        <ul class="advice-list">
+            <li *ngFor="let advice of debtAdvice">{{ advice }}</li>
+        </ul>
+    </div>
+
+    <div *ngIf="!showQuestion && financialGoal === 'Live Within My Means'" class="advice-section">
+        <h3>Living Within Your Means Advice</h3>
+        <ul class="advice-list">
+            <li *ngFor="let advice of debtAdvice">{{ advice }}</li>
+        </ul>
+    </div>    
 </div>

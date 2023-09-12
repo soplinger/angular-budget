@@ -1,9 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-body, h2, label, select {
-    font-family: 'Poppins', sans-serif;
-}
-
 h2 {
     font-size: 26px;
     font-weight: 600;
