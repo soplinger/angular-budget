@@ -26,8 +26,7 @@ import { BudgetAdvisingComponent } from './budget-advising/budget-advising.compo
     ReactiveFormsModule,
     AppRoutingModule,
     NgChartsModule,
-    FormsModule,
-    
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -24,6 +24,7 @@ export class BudgetFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private dataService: DataService, private router: Router) {
     this.budgetForm = this.fb.group({
       postTaxIncome: [null],
+      userAge: [null, [Validators.required, Validators.min(18), Validators.max(100)]],
       cashItems: this.fb.array([
         this.createCashControl(),
       ], Validators.minLength(1)),

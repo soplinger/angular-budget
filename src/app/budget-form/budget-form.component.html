@@ -8,6 +8,10 @@
     <div *ngIf="budgetForm.get('postTaxIncome')?.invalid && budgetForm.get('postTaxIncome')?.touched" class="error-text">
       Please enter a valid post-tax income.
     </div>
+    <label for="userAge">Your Age:</label>
+    <input type="number" id="userAge" formControlName="userAge" min="18" max="100">
+    <div *ngIf="budgetForm.get('userAge')?.invalid && budgetForm.get('userAge')?.touched" class="error-text">
+      Please enter a valid age.</div>
   </div>
 
   <!-- Cash Section -->
@@ -24,6 +28,7 @@
         <div *ngIf="budgetForm.get('cashName')?.invalid && budgetForm.get('cashName')?.touched" class="error-text">
           Please enter a cash account.
         </div>
+        <div *ngIf="i < cashItems.length - 1" class="divider"></div>
       </div>
     </div>
     <button (click)="addCashItem()">Add Cash Item</button>
@@ -49,6 +54,7 @@
         <div *ngIf="budgetForm.get('debtName')?.invalid && budgetForm.get('debtName')?.touched" class="error-text">
           Please enter a debt.
         </div>
+        <div *ngIf="i < debtItems.length - 1" class="divider"></div>
       </div>
     </div>
     <button (click)="addDebtItem()">Add Debt Item</button>
@@ -68,6 +74,7 @@
         <div *ngIf="budgetForm.get('necessityName')?.invalid && budgetForm.get('necessityName')?.touched" class="error-text">
           Please enter a necessity.
         </div>
+        <div *ngIf="i < necessities.length - 1" class="divider"></div>
       </div>
     </div>
     <button (click)="addNecessity()">Add Necessity</button>
