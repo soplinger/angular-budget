@@ -1,20 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body, h2, label, select {
+    font-family: 'Poppins', sans-serif;
+}
+
 h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #2c3e50;
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f7f9fc;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 label, select {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    color: #34495e;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: border-color 0.3s;
+}
+
+select:hover, select:focus {
+    border-color: #3498db;
 }

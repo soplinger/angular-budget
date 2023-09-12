@@ -84,25 +84,25 @@ export class BudgetFormComponent implements OnInit {
 
   createCashControl() {
     return this.fb.group({
-      name: ['Checking', Validators.required],
-      amount: [null, Validators.required, this.isNumeric]
+      name: ['Checking', [Validators.required]],
+      amount: [null, [Validators.required, this.isNumeric]]
     });
   }
 
   createDebtControl() {
     return this.fb.group({
-      name: ['Credit Cards', Validators.required],
-      nickname: ['', Validators.required],  // Add this line
-      amount: [null, Validators.required, this.isNumeric],
-      interestRate: [null, Validators.required, this.isNumeric]
+      name: ['Credit Cards', [Validators.required]],
+      nickname: ['', [Validators.required]],  // Add this line
+      amount: [null, [Validators.required, this.isNumeric]],
+      interestRate: [null, [Validators.required, this.isNumeric]]
     });
   }
   
 
   createNecessityControl() {
     return this.fb.group({
-      name: ['Rent', Validators.required],
-      amount: [null, Validators.required, this.isNumeric],
+      name: ['Rent', [Validators.required]],
+      amount: [null, [Validators.required, this.isNumeric]],
     });
   }
 
