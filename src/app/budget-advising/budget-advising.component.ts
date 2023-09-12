@@ -100,13 +100,45 @@ export class BudgetAdvisingComponent {
   
   
   handleFuture() {
-    console.log('handleFuture');
+    const income = this.formData.postTaxIncome;
+    const savingsRate = 0.2; // Recommended savings rate of 20%
+    const recommendedSavings = income * savingsRate;
+
+    const advice = [];
+    advice.push(`For a secure financial future, it's recommended to save at least 20% of your post-tax income.`);
+    advice.push(`Based on your current income, you should aim to save $${recommendedSavings.toFixed(2)} every month.`);
+    advice.push(`Consider investing in retirement accounts or other long-term investment vehicles to maximize your returns.`);
+    advice.push(`Regularly review and adjust your savings goals as your income and financial situation change.`);
+
+    console.log(advice);
+}
+
+handleLargePurchase() {
+  const currentSavings = this.formData.cashItems.reduce((acc: number, cash: any) => acc + cash.amount, 0);
+  const advice = [];
+  advice.push(`When saving for a large purchase, it's essential to set a clear goal and timeline.`);
+  advice.push(`You currently have $${currentSavings.toFixed(2)} saved. Determine the cost of your desired purchase and create a monthly savings plan.`);
+  advice.push(`Avoid making impulsive decisions. Research your purchase thoroughly and consider all costs involved.`);
+  advice.push(`Remember to maintain an emergency fund and not divert all your savings towards the purchase.`);
+
+  console.log(advice);
+}
+
+handleLiveWithinMeans() {
+  const monthlyExpenses = this.formData.necessities.reduce((acc: number, expense: any) => acc + expense.amount, 0);
+  const income = this.formData.postTaxIncome;
+  const advice = [];
+  advice.push(`Living within your means is crucial for financial stability.`);
+  advice.push(`Your monthly post-tax income is $${income.toFixed(2)}, and your monthly expenses amount to $${monthlyExpenses.toFixed(2)}.`);
+  if (income > monthlyExpenses) {
+      advice.push(`You have a surplus of $${(income - monthlyExpenses).toFixed(2)} each month. Consider saving or investing this amount.`);
+  } else {
+      advice.push(`You are spending more than you earn. Review your expenses and look for areas to cut back.`);
   }
-  handleLargePurchase() {
-    console.log('handleLargePurchase');
-  }
-  handleLiveWithinMeans() {
-    console.log('handleLiveWithinMeans');
-  }
+  advice.push(`Regularly track your spending and adjust your budget as needed. Avoid accumulating debt and prioritize paying off any existing liabilities.`);
+
+  console.log(advice);
+}
+
 
 }
